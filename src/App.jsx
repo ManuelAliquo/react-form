@@ -1,29 +1,56 @@
 import { useState } from "react";
 
-const articles = ["The 'Dark Forest' Theory", "Deep Space Signals", "First Contact Protocol"];
+const initialArticles = [
+  "The 'Dark Forest' Theory",
+  "Deep Space Signals",
+  "First Contact Protocol",
+];
 
 export default function App() {
+  const [articleList, setArticleList] = useState(initialArticles);
+  const [newArticle, setNewArticle] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (newArticle !== "") {
+      setArticleList([...articleList, newArticle]);
+      setNewArticle("");
+    }
+  };
+
+  const handleChange = (e) => setNewArticle(e.target.value);
+
   return (
-    <div className="container mt-5">
-      <h1 className="ps-2 mb-4">Blog Articles 🛸</h1>
-      <div className="d-flex gap-5">
-        <ul className="list-group fs-3 w-50">
-          {articles.map((article, index) => (
-            <li key={index} className="list-group-item">
-              {article}
-            </li>
-          ))}
-        </ul>
-        <form className="fs-2">
-          <label htmlFor="new-article">New Article</label>
-          <div className="input-group mb-3">
-            <input type="text" className="form-control fs-4" />
-            <button className="btn btn-primary fs-4" id="new-article">
-              Add
-            </button>
-          </div>
-        </form>
+    <>
+      <h1 className="text-center py-4 bg-secondary text-light">Conspiracy Blog</h1>
+      <div className="container mt-5">
+        <h2 className="h1 ps-2 mb-4">Blog Articles 🛸</h2>
+        <div className="d-flex gap-5">
+          <ul className="list-group fs-3 w-50">
+            {articleList.map((article, index) => (
+              <li key={index} className="list-group-item">
+                {article}
+              </li>
+            ))}
+          </ul>
+          <div className="vr"></div>
+          <form onSubmit={handleSubmit} className="fs-2">
+            <label htmlFor="new-article">New Article</label>
+            <div className="input-group mb-3">
+              <input
+                value={newArticle}
+                onChange={handleChange}
+                type="text"
+                placeholder="Article title.."
+                className="form-control fs-4"
+              />
+              <button className="btn btn-primary fs-4" id="new-article">
+                Add
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
