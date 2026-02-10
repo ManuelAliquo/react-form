@@ -20,6 +20,9 @@ export default function App() {
 
   const handleChange = (e) => setNewArticle(e.target.value);
 
+  const handleDelete = (indexToDelete) =>
+    setArticleList(articleList.filter((article, index) => index !== indexToDelete));
+
   return (
     <>
       <h1 className="text-center py-4 bg-secondary text-light">Conspiracy Blog</h1>
@@ -28,14 +31,19 @@ export default function App() {
         <div className="d-flex gap-5">
           <ul className="list-group fs-3 w-50">
             {articleList.map((article, index) => (
-              <li key={index} className="list-group-item">
-                {article}
+              <li key={index} className="list-group-item d-flex justify-content-between">
+                <span>{article}</span>
+                <button onClick={() => handleDelete(index)} className="btn btn-outline-danger px-3">
+                  <i className="bi bi-trash3"></i>
+                </button>
               </li>
             ))}
           </ul>
           <div className="vr"></div>
           <form onSubmit={handleSubmit} className="fs-2">
-            <label htmlFor="new-article">New Article</label>
+            <label htmlFor="new-article" className="mb-1">
+              New Article
+            </label>
             <div className="input-group mb-3">
               <input
                 value={newArticle}
