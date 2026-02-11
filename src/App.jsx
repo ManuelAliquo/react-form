@@ -1,4 +1,6 @@
 import { useState } from "react";
+import List from "./components/List";
+import Form from "./components/Form";
 
 const initialArticles = [
   "The 'Dark Forest' Theory",
@@ -29,34 +31,16 @@ export default function App() {
       <div className="container mt-5">
         <h2 className="h1 ps-2 mb-4">Blog Articles 🛸</h2>
         <div className="d-flex gap-5">
-          <ul className="list-group fs-3 w-50">
-            {articleList.map((article, index) => (
-              <li key={index} className="list-group-item d-flex justify-content-between">
-                <span>{article}</span>
-                <button onClick={() => handleDelete(index)} className="btn btn-outline-danger px-3">
-                  <i className="bi bi-trash3"></i>
-                </button>
-              </li>
-            ))}
-          </ul>
+          <List array={articleList} handleDelete={handleDelete} />
           <div className="vr"></div>
-          <form onSubmit={handleSubmit} className="fs-2">
-            <label htmlFor="new-article" className="mb-1">
-              New Article
-            </label>
-            <div className="input-group mb-3">
-              <input
-                value={newArticle}
-                onChange={handleChange}
-                type="text"
-                placeholder="Article title.."
-                className="form-control fs-4"
-              />
-              <button className="btn btn-primary fs-4" id="new-article">
-                Add
-              </button>
-            </div>
-          </form>
+          <Form
+            newItem={newArticle}
+            handleSubmit={handleSubmit}
+            handleChange={handleChange}
+            label="New Article"
+            placeholder="Article title..."
+            btnAction="Add"
+          />
         </div>
       </div>
     </>
